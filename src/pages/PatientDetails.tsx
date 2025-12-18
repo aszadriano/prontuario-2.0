@@ -1,0 +1,115 @@
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { maskCpf, maskPhone } from '../utils/masks';
+import { formatDate, formatTime } from '../utils/format';
+import { Card } from '../components/Card';
+import { Badge } from '../components/Badge';
+import { Button } from '../components/Button';
+import { usePatient } from '../hooks/usePatients';
+import { Spinner } from '../components/Spinner';
+
+export const PatientDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { data: patient, isLoading, error } = usePatient(id);
+  const [loading, setLoading] = React.useState<string | null>(null);
+
+  if (isLoading) {
+    return (
+      <div style={{ display: 'grid', placeItems: 'center', minHeight: '60vh' }}>
+        <Spinner size={32} />
+      </div>
+    );
+  }
+
+  if (error || !patient) {
+    return (
+      <Card>
+        <p>Paciente não encontrado.</p>
+        <Button variant="primary" onClick={() => navigate('/patients')}>
+          Voltar para a lista
+        </Button>
+      </Card>
+    );
+  }
+
+  const handleAction = (action: string) => {
+    setLoading(action);
+    setTimeout(() => setLoading(null), 1000);
+  };
+
+  return (
+    <div className="grid" style={{ gap: 20 }}>
+      <Button variant="ghost" icon="chevron-right" onClick={() => navigate(-1)}>
+        Voltar
+      </Button>
+
+      <Card>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: 14, flexWrap: 'wrap' }}>
+          <div>
+            <h2 style={{ margin: '0 0 8px 0' }}>{patient.name}</h2>
+            <p style={{ margin: 0, color: 'var(--color-text-muted)' }}>
+              CPF {maskCpf(patient.cpf)} • {patient.age} anos • {maskPhone(patient.phone)}
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <Badge tone="success">{patient.status === 'ativo' ? 'Ativo' : 'Pendente'}</Badge>
+            {patient.nextConsultation && (
+              <Badge tone="info">
+                Próxima: {formatDate(patient.nextConsultation)} • {formatTime(patient.nextConsultation)}
+              </Badge>
+            )}
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 12, marginTop: 16, flexWrap: 'wrap' }}>
+          <Button variant="primary" loading={loading === 'atendimento'} onClick={() => handleAction('atendimento')}>
+            Iniciar atendimento
+          </Button>
+          <Button variant="secondary" loading={loading === 'receita'} onClick={() => handleAction('receita')}>
+            Gerar receita
+          </Button>
+          <Button variant="ghost" loading={loading === 'historico'} onClick={() => handleAction('historico')}>
+            Ver histórico
+          </Button>
+        </div>
+      </Card>
+
+      <Card variant="flat" title={`Alergias (${patient.allergies.length || 0})`}>
+        {patient.allergies.length === 0 ? (
+          <p style={{ margin: 0, color: 'var(--color-text-muted)' }}>Nenhuma alergia registrada.</p>
+        ) : (
+          <ul>
+            {patient.allergies.map((allergy) => (
+              <li key={allergy} style={{ color: 'var(--color-text)', fontWeight: 600 }}>
+                {allergy}
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
+
+      <Card title="Histórico de consultas">
+        <div className="grid" style={{ gap: 12 }}>
+          {patient.history.map((entry) => (
+            <div
+              key={entry.id}
+              className="card"
+              style={{
+                padding: 14,
+                background: 'var(--color-surface-alt)',
+                borderColor: 'var(--color-border)'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
+                <strong>{formatDate(entry.date)}</strong>
+                <Badge tone="info">{formatTime(entry.date)}</Badge>
+              </div>
+              <p style={{ margin: '6px 0 0 0', fontWeight: 600 }}>{entry.reason}</p>
+              <p style={{ margin: '6px 0 0 0', color: 'var(--color-text-muted)' }}>{entry.notes}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  );
+};
