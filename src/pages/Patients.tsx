@@ -6,7 +6,7 @@ import { Input } from '../components/Input';
 import { Table } from '../components/Table';
 import { Badge } from '../components/Badge';
 import { Patient } from '../data/patients';
-import { maskCpf } from '../utils/masks';
+import { maskCPF } from '../utils/masks';
 import { formatDate } from '../utils/format';
 import { usePatients } from '../hooks/usePatients';
 import { Spinner } from '../components/Spinner';
@@ -16,9 +16,9 @@ export const Patients: React.FC = () => {
   const [query, setQuery] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [syncMessage, setSyncMessage] = React.useState<string | null>(null);
-  const { data, isLoading, error, refetch } = usePatients();
+  const { patients: data, loading: isLoading, error, fetchPatients: refetch } = usePatients();
 
-  const filtered = (data || []).filter((patient) => {
+  const filtered = (data || []).filter((patient: Patient) => {
     const term = query.toLowerCase();
     return (
       patient.name.toLowerCase().includes(term) ||
@@ -41,7 +41,7 @@ export const Patients: React.FC = () => {
       accessor: (row: Patient) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <strong>{row.name}</strong>
-          <small style={{ color: 'var(--color-text-muted)' }}>{maskCpf(row.cpf)} • {row.phone}</small>
+          <small style={{ color: 'var(--color-text-muted)' }}>{maskCPF(row.cpf)} • {row.phone}</small>
         </div>
       )
     },
@@ -54,13 +54,13 @@ export const Patients: React.FC = () => {
         ) : (
           <Badge tone="success">Sem registros</Badge>
         ),
-      align: 'center',
+      align: 'center' as const,
       width: '140px'
     },
     {
       header: 'Última consulta',
       accessor: (row: Patient) => formatDate(row.lastConsultation),
-      align: 'center',
+      align: 'center' as const,
       width: '180px'
     },
     {
@@ -75,7 +75,7 @@ export const Patients: React.FC = () => {
           </Button>
         </div>
       ),
-      align: 'right',
+      align: 'right' as const,
       width: '140px'
     }
   ];

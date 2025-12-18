@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Profile: React.FC = () => {
   const { user, logout } = useAuth();

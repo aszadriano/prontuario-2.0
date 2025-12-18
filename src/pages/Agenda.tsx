@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
-import { agendaSlots } from '../data/agenda';
+import { mockTimeSlots as agendaSlots, TimeSlot } from '../data/agenda';
 import { Badge } from '../components/Badge';
 
 export const Agenda: React.FC = () => {
@@ -19,9 +19,9 @@ export const Agenda: React.FC = () => {
           Selecione um horário para editar, bloquear ou iniciar consulta.
         </p>
         <div className="grid" style={{ gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
-          {agendaSlots.map((slot) => (
+          {agendaSlots.map((slot: TimeSlot) => (
             <div
-              key={slot.id}
+              key={slot.time}
               style={{
                 padding: 14,
                 borderRadius: 14,

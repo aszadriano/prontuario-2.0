@@ -2,8 +2,8 @@ import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
-import { formatDate, formatTime } from '../utils/format';
-import { maskCpf } from '../utils/masks';
+import { formatDate } from '../utils/format';
+import { maskCPF } from '../utils/masks';
 import { usePatients } from '../hooks/usePatients';
 import { Spinner } from '../components/Spinner';
 
@@ -22,8 +22,8 @@ const quickActions = [
 
 export const Dashboard: React.FC = () => {
   const [loadingAction, setLoadingAction] = React.useState<string | null>(null);
-  const { data: patients, isLoading, error } = usePatients();
-  const nextAppointment = patients?.find((p) => p.nextConsultation);
+  const { patients, loading, error } = usePatients();
+  const nextAppointment = patients?.find((p: any) => p.nextConsultation);
 
   const handleAction = (id: string) => {
     setLoadingAction(id);
@@ -55,13 +55,13 @@ export const Dashboard: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
               <Badge tone="info">{formatDate(nextAppointment.nextConsultation!)}</Badge>
-              <Badge tone="info">{formatTime(nextAppointment.nextConsultation!)}</Badge>
+              <Badge tone="info">{formatDateTime(nextAppointment.nextConsultation!)}</Badge>
               <Badge tone="warning">Retorno</Badge>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
               <div style={{ fontSize: 22, fontWeight: 800 }}>{nextAppointment.name}</div>
               <div style={{ fontWeight: 600, opacity: 0.92 }}>
-                CPF {maskCpf(nextAppointment.cpf)} • {nextAppointment.age} anos
+                CPF {maskCPF(nextAppointment.cpf)} • {nextAppointment.age} anos
               </div>
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>

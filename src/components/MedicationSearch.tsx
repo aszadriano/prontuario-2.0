@@ -76,7 +76,7 @@ export const MedicationSearch: React.FC<MedicationSearchProps> = ({
         />
         {loading && (
           <div className="search-loading">
-            <Spinner size="sm" />
+            <Spinner size={16} />
           </div>
         )}
       </div>

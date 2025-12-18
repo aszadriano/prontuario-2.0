@@ -1,6 +1,5 @@
 // components/AllergyCard.tsx
 import React from 'react';
-import clsx from 'clsx';
 import { Allergy } from '../types/allergy';
 import { Button } from './Button';
 import { Badge } from './Badge';

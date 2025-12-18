@@ -1,17 +1,18 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { maskCpf, maskPhone } from '../utils/masks';
-import { formatDate, formatTime } from '../utils/format';
+import { maskCPF, maskPhone } from '../utils/masks';
+import { formatDate, formatDateTime } from '../utils/format';
 import { Card } from '../components/Card';
 import { Badge } from '../components/Badge';
 import { Button } from '../components/Button';
-import { usePatient } from '../hooks/usePatients';
+import { usePatients } from '../hooks/usePatients';
 import { Spinner } from '../components/Spinner';
 
 export const PatientDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data: patient, isLoading, error } = usePatient(id);
+  const { patients, loading: isLoading } = usePatients();
+  const patient = patients.find(p => p.id === id);
   const [loading, setLoading] = React.useState<string | null>(null);
 
   if (isLoading) {
@@ -22,7 +23,7 @@ export const PatientDetails: React.FC = () => {
     );
   }
 
-  if (error || !patient) {
+  if (!patient) {
     return (
       <Card>
         <p>Paciente não encontrado.</p>
@@ -49,14 +50,14 @@ export const PatientDetails: React.FC = () => {
           <div>
             <h2 style={{ margin: '0 0 8px 0' }}>{patient.name}</h2>
             <p style={{ margin: 0, color: 'var(--color-text-muted)' }}>
-              CPF {maskCpf(patient.cpf)} • {patient.age} anos • {maskPhone(patient.phone)}
+              CPF {maskCPF(patient.cpf)} • {patient.age} anos • {maskPhone(patient.phone)}
             </p>
           </div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <Badge tone="success">{patient.status === 'ativo' ? 'Ativo' : 'Pendente'}</Badge>
             {patient.nextConsultation && (
               <Badge tone="info">
-                Próxima: {formatDate(patient.nextConsultation)} • {formatTime(patient.nextConsultation)}
+                Próxima: {formatDate(patient.nextConsultation)} • {formatDateTime(patient.nextConsultation)}
               </Badge>
             )}
           </div>
@@ -79,7 +80,7 @@ export const PatientDetails: React.FC = () => {
           <p style={{ margin: 0, color: 'var(--color-text-muted)' }}>Nenhuma alergia registrada.</p>
         ) : (
           <ul>
-            {patient.allergies.map((allergy) => (
+            {patient.allergies?.map((allergy: any) => (
               <li key={allergy} style={{ color: 'var(--color-text)', fontWeight: 600 }}>
                 {allergy}
               </li>
@@ -102,7 +103,7 @@ export const PatientDetails: React.FC = () => {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
                 <strong>{formatDate(entry.date)}</strong>
-                <Badge tone="info">{formatTime(entry.date)}</Badge>
+                <Badge tone="info">{formatDateTime(entry.date)}</Badge>
               </div>
               <p style={{ margin: '6px 0 0 0', fontWeight: 600 }}>{entry.reason}</p>
               <p style={{ margin: '6px 0 0 0', color: 'var(--color-text-muted)' }}>{entry.notes}</p>
