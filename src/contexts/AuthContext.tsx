@@ -44,6 +44,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       role: 'doctor',
     };
     const fallbackToken = `mock-${Date.now()}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
 
     try {
       const response = await fetch('/api/auth/login', {
@@ -52,6 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
+        signal: controller.signal,
       });
 
       if (response.ok) {
@@ -64,6 +67,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       }
     } catch (_error) {
       // fallback to mock login
+    } finally {
+      clearTimeout(timeoutId);
     }
 
     setToken(fallbackToken);

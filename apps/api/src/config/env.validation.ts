@@ -22,7 +22,11 @@ const envSchema = z
     DB_SSL: z.coerce.boolean().optional(),
     DB_SSL_REJECT_UNAUTHORIZED: z.coerce.boolean().optional(),
     // Auth / misc
-    JWT_SECRET: z.string().min(16),
+    JWT_SECRET: z
+      .string()
+      .min(16)
+      .optional()
+      .default('super-secret-development-key'),
     JWT_EXPIRES_IN: z.string().default('1h'),
     CORS_ORIGINS: z.string().optional(),
     ENABLE_SWAGGER: z.coerce.boolean().default(true),
@@ -31,8 +35,16 @@ const envSchema = z
     GOOGLE_CLIENT_SECRET: z.string().optional(),
     GOOGLE_REDIRECT_URI: z.string().optional(),
     GOOGLE_REFRESH_TOKEN: z.string().optional(),
-    GOOGLE_TOKEN_ENCRYPTION_KEY: z.string().min(32),
-    GOOGLE_OAUTH_STATE_SECRET: z.string().min(16),
+    GOOGLE_TOKEN_ENCRYPTION_KEY: z
+      .string()
+      .min(32)
+      .optional()
+      .default('dev-token-encryption-key-32-bytes'),
+    GOOGLE_OAUTH_STATE_SECRET: z
+      .string()
+      .min(16)
+      .optional()
+      .default('dev-oauth-state-secret'),
     GOOGLE_OAUTH_SUCCESS_REDIRECT: z.string().optional()
   })
   .superRefine((val, ctx) => {
