@@ -7,10 +7,18 @@ export const Login: React.FC = () => {
   const { login } = useAuth();
   const [email, setEmail] = React.useState('medico@demo.com');
   const [password, setPassword] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await login(email, password);
+    setIsLoading(true);
+    try {
+      await login(email, password);
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

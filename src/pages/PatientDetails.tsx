@@ -75,8 +75,8 @@ export const PatientDetails: React.FC = () => {
         </div>
       </Card>
 
-      <Card variant="flat" title={`Alergias (${patient.allergies.length || 0})`}>
-        {patient.allergies.length === 0 ? (
+      <Card variant="flat" title={`Alergias (${patient.allergies?.length || 0})`}>
+        {(patient.allergies?.length || 0) === 0 ? (
           <p style={{ margin: 0, color: 'var(--color-text-muted)' }}>Nenhuma alergia registrada.</p>
         ) : (
           <ul>
@@ -90,7 +90,9 @@ export const PatientDetails: React.FC = () => {
       </Card>
 
       <Card title="Histórico de consultas">
-        <div className="grid" style={{ gap: 12 }}            {patient.history?.map((entry: any) => (            <div
+        <div className="grid" style={{ gap: 12 }}>
+          {patient.history?.map((entry: any) => (
+            <div
               key={entry.id}
               className="card"
               style={{

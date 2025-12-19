@@ -49,8 +49,8 @@ export const Patients: React.FC = () => {
     {
       header: 'Alergias',
       accessor: (row: Patient) =>
-        row.allergies.length > 0 ? (
-          <Badge tone="danger">{row.allergies.length}</Badge>
+        (row.allergies?.length || 0) > 0 ? (
+          <Badge tone="danger">{row.allergies?.length}</Badge>
         ) : (
           <Badge tone="success">Sem registros</Badge>
         ),
@@ -59,7 +59,7 @@ export const Patients: React.FC = () => {
     },
     {
       header: 'Última consulta',
-      accessor: (row: Patient) => formatDate(row.lastConsultation),
+      accessor: (row: Patient) => row.lastConsultation ? formatDate(row.lastConsultation) : '-',
       align: 'center' as const,
       width: '180px'
     },
