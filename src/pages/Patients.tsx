@@ -45,7 +45,7 @@ export const Patients: React.FC = () => {
         </div>
       )
     },
-    { header: 'Idade', accessor: (row: Patient) => `${row.age} anos`, align: 'center', width: '120px' },
+    { header: 'Idade', accessor: (row: Patient) => `${row.age} anos`, align: 'center' as const, width: '120px' },
     {
       header: 'Alergias',
       accessor: (row: Patient) =>

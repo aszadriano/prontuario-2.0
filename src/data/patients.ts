@@ -1,6 +1,8 @@
 // data/patients.ts
 import { Patient } from '../hooks/usePatients';
 
+export type { Patient };
+
 export const mockPatients: Patient[] = [
   {
     id: '1',

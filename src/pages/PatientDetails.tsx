@@ -90,9 +90,7 @@ export const PatientDetails: React.FC = () => {
       </Card>
 
       <Card title="Histórico de consultas">
-        <div className="grid" style={{ gap: 12 }}>
-          {patient.history.map((entry) => (
-            <div
+        <div className="grid" style={{ gap: 12 }}            {patient.history?.map((entry: any) => (            <div
               key={entry.id}
               className="card"
               style={{

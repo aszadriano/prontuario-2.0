@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from '../components/Card';
 import { Button } from '../components/Button';
 import { Badge } from '../components/Badge';
-import { formatDate } from '../utils/format';
+import { formatDate, formatDateTime } from '../utils/format';
 import { maskCPF } from '../utils/masks';
 import { usePatients } from '../hooks/usePatients';
 import { Spinner } from '../components/Spinner';
@@ -32,7 +32,7 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="grid" style={{ gap: 20 }}>
-      {isLoading && (
+      {loading && (
         <Card variant="highlight" title="Próxima consulta">
           <div style={{ display: 'grid', placeItems: 'center', padding: 24 }}>
             <Spinner size={28} />
@@ -40,13 +40,13 @@ export const Dashboard: React.FC = () => {
         </Card>
       )}
 
-      {!isLoading && error && (
+      {!loading && error && (
         <Card variant="highlight" title="Próxima consulta">
           <p style={{ margin: 0, color: 'var(--color-danger)' }}>Erro ao carregar próxima consulta.</p>
         </Card>
       )}
 
-      {!isLoading && !error && nextAppointment && (
+      {!loading && !error && nextAppointment && (
         <Card
           variant="highlight"
           title="Próxima consulta"

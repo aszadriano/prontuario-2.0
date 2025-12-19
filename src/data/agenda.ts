@@ -4,7 +4,10 @@ export interface TimeSlot {
   time: string;
   available: boolean;
   patientName?: string;
+  patient?: string;
   type?: string;
+  status?: string;
+  note?: string;
 }
 
 export const mockTimeSlots: TimeSlot[] = [

@@ -4,7 +4,7 @@ import { Input } from '../components/Input';
 import { useAuth } from '../contexts/AuthContext';
 
 export const Login: React.FC = () => {
-  const { login, isLoading } = useAuth();
+  const { login } = useAuth();
   const [email, setEmail] = React.useState('medico@demo.com');
   const [password, setPassword] = React.useState('');
 

@@ -14,6 +14,16 @@ export interface Patient {
   zipCode: string;
   createdAt: string;
   updatedAt?: string;
+  age?: number;
+  status?: string;
+  nextConsultation?: string;
+  lastConsultation?: string;
+  allergies?: string[];
+  history?: Array<{
+    date: string;
+    type: string;
+    description: string;
+  }>;
 }
 
 export const usePatients = () => {
