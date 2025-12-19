@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from './Button';
-import { Icon } from './Icon';
+import { Icon, IconName } from './Icon';
 import './Layout.css';
 
 export const Layout = () => {
@@ -20,7 +20,7 @@ export const Layout = () => {
     navigate('/login');
   };
 
-  const menuItems = [
+  const menuItems: { path: string; label: string; icon: IconName; children?: { path: string; label: string }[] }[] = [
     { path: '/', label: 'Dashboard', icon: 'home' },
     {
       path: '/patients',
