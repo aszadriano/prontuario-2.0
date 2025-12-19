@@ -56,7 +56,7 @@ export const Dashboard: React.FC = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <div style={{ fontSize: 22, fontWeight: 700 }}>{nextAppointment.name}</div>
             <div style={{ color: 'var(--color-text-secondary)', fontWeight: 500 }}>
-              CPF {maskCPF(nextAppointment.cpf)} ? {nextAppointment.age} anos
+              CPF {maskCPF(nextAppointment.cpf)} • {nextAppointment.age} anos
             </div>
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -94,7 +94,7 @@ export const Dashboard: React.FC = () => {
             </small>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
               <span style={{ fontSize: 28, fontWeight: 700 }}>{metric.value}</span>
-              <span style={{ color: var(--color-primary-strong)", fontWeight: 600 }}>{metric.trend}</span>
+              <span style={{ color: 'var(--color-primary-strong)', fontWeight: 600 }}>{metric.trend}</span>
             </div>
           </Card>
         ))}

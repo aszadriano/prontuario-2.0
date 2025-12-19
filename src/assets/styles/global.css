@@ -20,6 +20,7 @@
   --color-text-primary: #2f2c36;
   --color-text-secondary: #6b6476;
   --color-text-tertiary: #9a92a7;
+  --color-text-muted: #8b8397;
 
   --color-border: #e6ddd1;
   --color-border-light: #efe7dc;
@@ -263,6 +264,14 @@ body::before {
   text-align: left;
   padding: 12px 14px;
   font-weight: var(--font-weight-semibold);
+}
+
+.table thead th:first-child {
+  border-top-left-radius: 14px;
+}
+
+.table thead th:last-child {
+  border-top-right-radius: 14px;
 }
 
 .table tbody td {
