@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from './Button';
+import { Icon } from './Icon';
 import './Layout.css';
 
 export const Layout = () => {
@@ -20,19 +21,19 @@ export const Layout = () => {
   };
 
   const menuItems = [
-    { path: '/', label: 'Dashboard', icon: 'D' },
+    { path: '/', label: 'Dashboard', icon: 'home' },
     {
       path: '/patients',
       label: 'Pacientes',
-      icon: 'P',
+      icon: 'users',
       children: [
         { path: '/patients', label: 'Lista' },
         { path: '/patients/new', label: 'Cadastrar' },
       ],
     },
-    { path: '/agenda', label: 'Agenda', icon: 'A' },
-    { path: '/prescriptions', label: 'Prescricoes', icon: 'R' },
-    { path: '/profile', label: 'Perfil', icon: 'U' },
+    { path: '/agenda', label: 'Agenda', icon: 'calendar' },
+    { path: '/prescriptions', label: 'Prescricoes', icon: 'report' },
+    { path: '/profile', label: 'Perfil', icon: 'settings' },
   ];
 
   const showTopbarActions =
@@ -52,7 +53,7 @@ export const Layout = () => {
             </div>
           </div>
           <button className="sidebar__close" onClick={() => setSidebarOpen(false)} aria-label="Fechar menu">
-            Fechar
+            <Icon name="close" size={18} />
           </button>
         </div>
 
@@ -64,7 +65,9 @@ export const Layout = () => {
             return (
               <div key={item.path} className="sidebar__nav-group">
                 <Link to={item.path} className={`sidebar__link ${isActive ? 'sidebar__link--active' : ''}`}>
-                  <span className="sidebar__icon">{item.icon}</span>
+                  <span className="sidebar__icon">
+                    <Icon name={item.icon} size={18} />
+                  </span>
                   <span className="sidebar__label">{item.label}</span>
                 </Link>
                 {isActive && item.children && (
@@ -107,8 +110,8 @@ export const Layout = () => {
 
       <main className="main-content">
         <header className="topbar">
-          <button className="topbar__menu" onClick={() => setSidebarOpen(true)}>
-            Menu
+          <button className="topbar__menu" onClick={() => setSidebarOpen(true)} aria-label="Abrir menu">
+            <Icon name="menu" size={18} />
           </button>
           <div className="topbar__title">
             <div className="topbar__name">SienaMed</div>
