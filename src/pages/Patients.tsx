@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Card } from '../components/Card';
 import { Input } from '../components/Input';
@@ -13,10 +13,24 @@ import { Spinner } from '../components/Spinner';
 
 export const Patients: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [query, setQuery] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [syncMessage, setSyncMessage] = React.useState<string | null>(null);
-  const { patients: data, loading: isLoading, error, fetchPatients: refetch } = usePatients();
+  const [formData, setFormData] = React.useState({
+    name: '',
+    cpf: '',
+    birthDate: '',
+    phone: '',
+    email: '',
+    address: '',
+    city: '',
+    state: '',
+    zipCode: '',
+  });
+  const { patients: data, loading: isLoading, error, fetchPatients: refetch, createPatient } = usePatients();
+
+  const showCreate = location.pathname.endsWith('/new');
 
   const filtered = (data || []).filter((patient: Patient) => {
     const term = query.toLowerCase();
@@ -33,6 +47,28 @@ export const Patients: React.FC = () => {
     refetch()
       .then(() => setSyncMessage('Base sincronizada com sucesso'))
       .finally(() => setLoading(false));
+  };
+
+  const handleCloseModal = () => {
+    navigate('/patients');
+  };
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await createPatient(formData);
+    setFormData({
+      name: '',
+      cpf: '',
+      birthDate: '',
+      phone: '',
+      email: '',
+      address: '',
+      city: '',
+      state: '',
+      zipCode: '',
+    });
+    setSyncMessage('Paciente cadastrado (simulacao)');
+    handleCloseModal();
   };
 
   const columns = [
@@ -73,7 +109,7 @@ export const Patients: React.FC = () => {
             Ver
           </Button>
           <Button variant="ghost" size="sm" onClick={() => navigate(`/patients/${row.id}`)}>
-            ?
+            >
           </Button>
         </div>
       ),
@@ -138,6 +174,105 @@ export const Patients: React.FC = () => {
           />
         )}
       </Card>
+
+      {showCreate && (
+        <div className="modal">
+          <div className="modal__overlay" onClick={handleCloseModal} />
+          <div className="modal__content">
+            <Card>
+              <div className="modal__header">
+                <div>
+                  <h2 style={{ margin: 0 }}>Novo paciente</h2>
+                  <p style={{ margin: 0, color: 'var(--color-text-secondary)' }}>
+                    Preencha os dados para simular o cadastro.
+                  </p>
+                </div>
+                <button className="modal__close" onClick={handleCloseModal}>
+                  x
+                </button>
+              </div>
+              <form className="form-grid" onSubmit={handleSubmit}>
+                <div className="form-row">
+                  <Input
+                    name="name"
+                    label="Nome completo"
+                    placeholder="Ex: Maria Silva"
+                    value={formData.name}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                    required
+                  />
+                  <Input
+                    name="cpf"
+                    label="CPF"
+                    placeholder="000.000.000-00"
+                    value={formData.cpf}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, cpf: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div className="form-row">
+                  <Input
+                    name="birthDate"
+                    label="Data de nascimento"
+                    type="date"
+                    value={formData.birthDate}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, birthDate: e.target.value }))}
+                  />
+                  <Input
+                    name="phone"
+                    label="Telefone"
+                    placeholder="(11) 90000-0000"
+                    value={formData.phone}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
+                  />
+                </div>
+                <Input
+                  name="email"
+                  label="E-mail"
+                  placeholder="email@exemplo.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                />
+                <Input
+                  name="address"
+                  label="Endereco"
+                  placeholder="Rua, numero"
+                  value={formData.address}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, address: e.target.value }))}
+                />
+                <div className="form-row">
+                  <Input
+                    name="city"
+                    label="Cidade"
+                    value={formData.city}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, city: e.target.value }))}
+                  />
+                  <Input
+                    name="state"
+                    label="Estado"
+                    value={formData.state}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, state: e.target.value }))}
+                  />
+                  <Input
+                    name="zipCode"
+                    label="CEP"
+                    value={formData.zipCode}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, zipCode: e.target.value }))}
+                  />
+                </div>
+                <div style={{ display: 'flex', gap: 10, justifyContent: 'flex-end' }}>
+                  <Button variant="outline" size="sm" type="button" onClick={handleCloseModal}>
+                    Cancelar
+                  </Button>
+                  <Button variant="primary" size="sm" type="submit">
+                    Cadastrar
+                  </Button>
+                </div>
+              </form>
+            </Card>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

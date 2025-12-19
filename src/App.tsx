@@ -36,9 +36,12 @@ function AppRoutes() {
       >
         <Route index element={<Dashboard />} />
         <Route path="patients" element={<Patients />} />
+        <Route path="patients/new" element={<Patients />} />
         <Route path="patients/:id" element={<PatientDetails />} />
         <Route path="agenda" element={<Agenda />} />
+        <Route path="agenda/new" element={<Agenda />} />
         <Route path="prescriptions" element={<Prescriptions />} />
+        <Route path="prescriptions/new" element={<Prescriptions />} />
         <Route path="medications" element={<Medications />} />
         <Route path="profile" element={<Profile />} />
       </Route>

@@ -317,6 +317,54 @@ body::before {
   gap: var(--spacing-lg);
 }
 
+/* Modal */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 200;
+}
+
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(32, 30, 40, 0.4);
+}
+
+.modal__content {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 92vw);
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.modal__close {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+}
+
+.form-grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--spacing-md);
+}
+
 .text-center {
   text-align: center;
 }

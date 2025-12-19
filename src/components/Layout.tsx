@@ -14,19 +14,19 @@ export const Layout = () => {
   };
 
   const menuItems = [
-    { path: '/', label: 'Dashboard', icon: '🏠' },
+    { path: '/', label: 'Dashboard', icon: 'D' },
     {
       path: '/patients',
       label: 'Pacientes',
-      icon: '👥',
+      icon: 'P',
       children: [
         { path: '/patients', label: 'Lista' },
         { path: '/patients/new', label: 'Cadastrar' },
       ],
     },
-    { path: '/agenda', label: 'Agenda', icon: '📅' },
-    { path: '/prescriptions', label: 'Relatorios', icon: '📄' },
-    { path: '/profile', label: 'Perfil', icon: '⚙️' },
+    { path: '/agenda', label: 'Agenda', icon: 'A' },
+    { path: '/prescriptions', label: 'Prescricoes', icon: 'R' },
+    { path: '/profile', label: 'Perfil', icon: 'U' },
   ];
 
   const showTopbarActions =
@@ -37,9 +37,9 @@ export const Layout = () => {
       <aside className="sidebar">
         <div className="sidebar__header">
           <div className="sidebar__brand">
-            <div className="sidebar__brand-avatar">MS</div>
+            <div className="sidebar__brand-avatar">SM</div>
             <div>
-              <h1 className="sidebar__logo">MedSystem</h1>
+              <h1 className="sidebar__logo">SienaMed</h1>
               <p className="sidebar__tagline">Lavanda Edition</p>
             </div>
           </div>
@@ -78,7 +78,6 @@ export const Layout = () => {
 
         <div className="sidebar__notice">
           <div className="sidebar__notice-title">LGPD ativa</div>
-          <div className="sidebar__notice-text">CPFs mascarados na listagem e no dashboard.</div>
         </div>
 
         <div className="sidebar__footer">
@@ -98,18 +97,17 @@ export const Layout = () => {
       <main className="main-content">
         <header className="topbar">
           <div className="topbar__title">
-            <div className="topbar__name">Prontuario 2.0</div>
-            <div className="topbar__subtitle">Fluxo enxuto e seguro</div>
+            <div className="topbar__name">SienaMed</div>
           </div>
           <div className="topbar__search">
             <input type="text" placeholder="Buscar paciente, CPF ou telefone" />
           </div>
           {showTopbarActions && (
             <div className="topbar__actions">
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" onClick={() => navigate('/agenda/new')}>
                 Nova consulta
               </Button>
-              <Button variant="primary" size="sm">
+              <Button variant="primary" size="sm" onClick={() => navigate('/patients/new')}>
                 Novo paciente
               </Button>
             </div>

@@ -23,10 +23,18 @@ export const Login: React.FC = () => {
 
   return (
     <div style={{ display: 'grid', placeItems: 'center', minHeight: '100vh', background: 'var(--color-background)' }}>
-      <div style={{ width: 360, padding: 24, borderRadius: 18, boxShadow: '0 10px 40px rgba(0,0,0,0.06)', background: 'var(--color-surface)' }}>
-        <h2 style={{ margin: '0 0 8px 0', textAlign: 'center' }}>Prontuário Médico</h2>
+      <div
+        style={{
+          width: 360,
+          padding: 24,
+          borderRadius: 18,
+          boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
+          background: 'var(--color-surface)',
+        }}
+      >
+        <h2 style={{ margin: '0 0 8px 0', textAlign: 'center' }}>SienaMed</h2>
         <p style={{ margin: '0 0 18px 0', textAlign: 'center', color: 'var(--color-text-muted)' }}>
-          Centralize histórico com segurança e rapidez.
+          Centralize historico com seguranca e rapidez.
         </p>
         <form className="grid" style={{ gap: 12 }} onSubmit={handleSubmit}>
           <Input
@@ -40,7 +48,7 @@ export const Login: React.FC = () => {
             label="Senha"
             name="password"
             type="password"
-            placeholder="••••••••"
+            placeholder="********"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -49,7 +57,7 @@ export const Login: React.FC = () => {
           </Button>
         </form>
         <p style={{ textAlign: 'center', marginTop: 12, color: 'var(--color-text-muted)' }}>
-          Precisa de acesso? Fale com o admin da clínica.
+          Precisa de acesso? Fale com o admin da clinica.
         </p>
       </div>
     </div>

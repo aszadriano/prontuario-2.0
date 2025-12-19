@@ -5,6 +5,7 @@ import { Badge } from '../components/Badge';
 import { formatDate, formatDateTime } from '../utils/format';
 import { maskCPF } from '../utils/masks';
 import { usePatients } from '../hooks/usePatients';
+import { useNavigate } from 'react-router-dom';
 import { Spinner } from '../components/Spinner';
 
 const metrics = [
@@ -21,6 +22,7 @@ const quickActions = [
 ];
 
 export const Dashboard: React.FC = () => {
+  const navigate = useNavigate();
   const [loadingAction, setLoadingAction] = React.useState<string | null>(null);
   const { patients, loading, error } = usePatients();
   const nextAppointment = patients?.find((p: any) => p.nextConsultation);
@@ -28,6 +30,9 @@ export const Dashboard: React.FC = () => {
   const handleAction = (id: string) => {
     setLoadingAction(id);
     setTimeout(() => setLoadingAction(null), 1200);
+    if (id === 'Nova consulta') navigate('/agenda/new');
+    if (id === 'Gerar receita') navigate('/prescriptions/new');
+    if (id === 'Ver agenda') navigate('/agenda');
   };
 
   return (
