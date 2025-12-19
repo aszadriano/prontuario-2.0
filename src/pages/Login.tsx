@@ -1,10 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Input } from '../components/Input';
 import { useAuth } from '../contexts/AuthContext';
 
 export const Login: React.FC = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = React.useState('medico@demo.com');
   const [password, setPassword] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);
@@ -14,6 +16,7 @@ export const Login: React.FC = () => {
     setIsLoading(true);
     try {
       await login(email, password);
+      navigate('/');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
     } finally {

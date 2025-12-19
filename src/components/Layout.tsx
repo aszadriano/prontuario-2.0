@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Button } from './Button';
@@ -7,6 +8,11 @@ export const Layout = () => {
   const { user, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -34,7 +40,9 @@ export const Layout = () => {
 
   return (
     <div className="layout">
-      <aside className="sidebar">
+      {sidebarOpen && <div className="sidebar__overlay" onClick={() => setSidebarOpen(false)} />}
+
+      <aside className={`sidebar ${sidebarOpen ? 'sidebar--open' : ''}`}>
         <div className="sidebar__header">
           <div className="sidebar__brand">
             <div className="sidebar__brand-avatar">SM</div>
@@ -43,6 +51,9 @@ export const Layout = () => {
               <p className="sidebar__tagline">Lavanda Edition</p>
             </div>
           </div>
+          <button className="sidebar__close" onClick={() => setSidebarOpen(false)} aria-label="Fechar menu">
+            Fechar
+          </button>
         </div>
 
         <nav className="sidebar__nav">
@@ -96,6 +107,9 @@ export const Layout = () => {
 
       <main className="main-content">
         <header className="topbar">
+          <button className="topbar__menu" onClick={() => setSidebarOpen(true)}>
+            Menu
+          </button>
           <div className="topbar__title">
             <div className="topbar__name">SienaMed</div>
           </div>

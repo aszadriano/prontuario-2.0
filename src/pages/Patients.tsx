@@ -109,7 +109,7 @@ export const Patients: React.FC = () => {
             Ver
           </Button>
           <Button variant="ghost" size="sm" onClick={() => navigate(`/patients/${row.id}`)}>
-            >
+            &gt;
           </Button>
         </div>
       ),
