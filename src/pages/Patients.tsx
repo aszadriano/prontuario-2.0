@@ -41,51 +41,55 @@ export const Patients: React.FC = () => {
       accessor: (row: Patient) => (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <strong>{row.name}</strong>
-          <small style={{ color: 'var(--color-text-muted)' }}>{maskCPF(row.cpf)} • {row.phone}</small>
+          <small style={{ color: 'var(--color-text-tertiary)' }}>
+            {maskCPF(row.cpf)} ? {row.phone}
+          </small>
         </div>
-      )
+      ),
     },
-    { header: 'Idade', accessor: (row: Patient) => `${row.age} anos`, align: 'center' as const, width: '120px' },
+    { header: 'Idade', accessor: (row: Patient) => `${row.age ?? '-'} anos`, align: 'center' as const, width: '110px' },
     {
       header: 'Alergias',
       accessor: (row: Patient) =>
         (row.allergies?.length || 0) > 0 ? (
-          <Badge tone="danger">{row.allergies?.length}</Badge>
+          <Badge tone="info">{row.allergies?.length}</Badge>
         ) : (
           <Badge tone="success">Sem registros</Badge>
         ),
       align: 'center' as const,
-      width: '140px'
+      width: '130px',
     },
     {
-      header: 'Última consulta',
-      accessor: (row: Patient) => row.lastConsultation ? formatDate(row.lastConsultation) : '-',
+      header: 'Ultima consulta',
+      accessor: (row: Patient) => (row.lastConsultation ? formatDate(row.lastConsultation) : '-'),
       align: 'center' as const,
-      width: '180px'
+      width: '160px',
     },
     {
-      header: 'Ação',
+      header: 'Acao',
       accessor: (row: Patient) => (
         <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6 }}>
-          <Button variant="ghost" size="sm" onClick={() => navigate(`/patients/${row.id}`)}>
-            Abrir
+          <Button variant="outline" size="sm" onClick={() => navigate(`/patients/${row.id}`)}>
+            Ver
           </Button>
-          <Button variant="outline" size="sm" onClick={() => navigate(`/patients/new?id=${row.id}`)}>
-            Editar
+          <Button variant="ghost" size="sm" onClick={() => navigate(`/patients/${row.id}`)}>
+            ?
           </Button>
         </div>
       ),
       align: 'right' as const,
-      width: '140px'
-    }
+      width: '120px',
+    },
   ];
 
   return (
-    <div className="grid" style={{ gap: 20 }}>
+    <div className="grid" style={{ gap: 24 }}>
       <div className="page-header">
         <div>
           <h1 style={{ margin: 0 }}>Pacientes</h1>
-          <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>CPF mascarado por padrão (LGPD)</p>
+          <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>
+            CPF mascarado por padrao (LGPD)
+          </p>
         </div>
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <Button variant="secondary" onClick={triggerSync} loading={loading}>
@@ -114,7 +118,7 @@ export const Patients: React.FC = () => {
             onChange={(e) => setQuery(e.target.value)}
             containerStyle={{ flex: 1, minWidth: 260 }}
           />
-          <Button variant="outline" size="md">
+          <Button variant="outline" size="sm">
             Filtros
           </Button>
         </div>
@@ -124,7 +128,7 @@ export const Patients: React.FC = () => {
             <Spinner size={28} />
           </div>
         )}
-        {error && <p style={{ color: 'var(--color-danger)' }}>Erro ao carregar pacientes.</p>}
+        {error && <p style={{ color: 'var(--color-error)' }}>Erro ao carregar pacientes.</p>}
         {!isLoading && !error && (
           <Table
             data={filtered}
