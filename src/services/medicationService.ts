@@ -1,7 +1,7 @@
 // services/medicationService.ts
 import { Medication, InteractionCheckResult } from '../types/medication';
 
-const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3000/api';
+const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || '/api';
 
 export const medicationService = {
   /**

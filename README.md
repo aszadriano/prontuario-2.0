@@ -35,7 +35,7 @@ Sistema completo de Prontuário Médico Eletrônico com design moderno (lavanda 
 
 - Node.js 18+
 - npm ou yarn
-- Backend NestJS rodando na porta 3000
+- PostgreSQL (para uso completo do backend)
 
 ### Instalação
 
@@ -47,20 +47,24 @@ npm install
 cp .env.example .env
 # Edite o arquivo .env com suas configurações
 
-# 3. Executar em desenvolvimento
+# 3. Executar em desenvolvimento (front + backend)
+# Terminal 1 (API)
+npm run dev --workspace api
+
+# Terminal 2 (Front)
 npm run dev
 
-# O sistema estará disponível em http://localhost:3001
+# O sistema estara disponivel em http://localhost:3001
 ```
 
-### Build para Produção
+### Build para Producao
 
 ```bash
-# Gerar build otimizado
+# Gerar build otimizado (front + backend)
 npm run build
 
-# Preview do build
-npm run preview
+# Subir o app completo (front + backend com proxy /api)
+npm start
 ```
 
 ---
@@ -231,7 +235,7 @@ Veja o guia detalhado: **DEPLOY_RAILWAY.md**
 1. Criar repositório no GitHub
 2. Push do código
 3. Conectar com Railway
-4. Configurar variável `VITE_API_URL`
+4. Configurar variavel `NODE_ENV` (opcional `VITE_API_URL`)
 5. Deploy automático! 🎉
 
 ---
@@ -280,7 +284,7 @@ Veja o guia detalhado: **DEPLOY_RAILWAY.md**
 
 ### Erro: "Cannot connect to API"
 
-**Solução:** Verifique se o backend está rodando na porta 3000 e se a variável `VITE_API_URL` está configurada corretamente.
+**Solucao:** Verifique se o backend esta rodando na porta 4000 e se o proxy `/api` esta respondendo (ou ajuste `VITE_API_URL` se usar backend externo).
 
 ### Erro: "Module not found"
 
@@ -315,4 +319,3 @@ O sistema está **100% funcional** e pronto para ser executado. Basta seguir os 
 **Desenvolvido com ❤️**  
 **Versão:** 2.0.0  
 **Data:** 09 de Dezembro de 2025
-

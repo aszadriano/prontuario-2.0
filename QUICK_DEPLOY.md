@@ -34,8 +34,9 @@ git push -u origin main
 No Railway, adicione em "Variables":
 
 ```
-VITE_API_URL=https://seu-backend.railway.app/api
 NODE_ENV=production
+# Opcional: VITE_API_URL=/api
+# Opcional: API_PORT=4000
 ```
 
 **⚠️ Substitua pela URL real do seu backend!**

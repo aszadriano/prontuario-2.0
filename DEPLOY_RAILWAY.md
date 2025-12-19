@@ -58,7 +58,7 @@ git push -u origin main
    - Adicione as seguintes variáveis:
 
    ```
-   VITE_API_URL=https://seu-backend.railway.app/api
+   # Opcional: VITE_API_URL=/api
    NODE_ENV=production
    ```
 
@@ -105,10 +105,11 @@ railway init
 
 ```bash
 # Definir URL da API
-railway variables set VITE_API_URL=https://seu-backend.railway.app/api
-
 # Definir ambiente
 railway variables set NODE_ENV=production
+
+# Opcional: backend externo
+# railway variables set VITE_API_URL=/api
 ```
 
 ### Passo 5: Deploy
@@ -127,16 +128,10 @@ railway open
 
 ## 🔧 Configurações Importantes
 
-### 1. Conectar com Backend
+### 1. Backend integrado (padrao)
 
-Se o seu backend também está no Railway:
-
-1. No dashboard do Railway, vá para o projeto do backend
-2. Copie a URL pública (ex: `https://backend-production.up.railway.app`)
-3. No projeto do front-end, adicione a variável:
-   ```
-   VITE_API_URL=https://backend-production.up.railway.app/api
-   ```
+O backend ja esta no mesmo servico e o front usa o proxy `/api`.
+Se quiser apontar para outro backend, configure `VITE_API_URL`.
 
 ### 2. CORS no Backend
 
@@ -243,7 +238,7 @@ railway up --detach
 ### Erro: "Cannot connect to API"
 
 **Solução:**
-1. Verifique se a variável `VITE_API_URL` está correta
+1. Verifique se o proxy `/api` esta respondendo (ou ajuste `VITE_API_URL` se usar backend externo)
 2. Verifique se o backend está rodando
 3. Verifique CORS no backend
 
@@ -323,7 +318,7 @@ Após o deploy:
 - [ ] Repositório criado no GitHub
 - [ ] Código commitado e pushed
 - [ ] Projeto criado no Railway
-- [ ] Variável `VITE_API_URL` configurada
+- [ ] `NODE_ENV` configurado (opcional `VITE_API_URL`)
 - [ ] Backend rodando e acessível
 - [ ] CORS configurado no backend
 - [ ] Build concluído com sucesso
